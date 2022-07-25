@@ -1,36 +1,36 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
-// Represents a songList having lists of songs added (as song objects or string) and a song bank
+// Represents a playlist having lists of songs added (as song objects or string) and a song bank
 public class Playlist {
     private ArrayList<Song> songList;
     private ArrayList<String> titleList;
     private SongBank allSongs;
 
-    // EFFECTS: constructs a playlist with empty song list and empty song bank
+    // EFFECTS: constructs a playlist with empty lists of songs added and empty song bank
     public Playlist() {
         songList = new ArrayList<>();
         titleList = new ArrayList<>();
         allSongs = new SongBank();
     }
 
-    // REQUIRES: title has a non-zero length AND a song in full database of SongBank has given title
+    // REQUIRES: title has a non-zero length AND a song in full song bank has given title
     // MODIFIES: this
-    // EFFECTS: if song list contains song with given title, return false,
+    // EFFECTS: if current list of songs added contains song with given title, return false,
     //          otherwise add the song to song list and return true
     public boolean addSong(String title) {
         if (songListContains(title)) {
             System.out.println("(Note: the song was added previously!)");
             return false;
         } else {
-            songList.add(allSongs.findSong(title));
+            allSongs.addAllSongs();
+            songList.add(allSongs.getSong(title));
             return true;
         }
     }
 
-    // REQUIRES: title has a non-zero length AND a song in full database of SongBank has given title
+    // REQUIRES: title has a non-zero length AND a song in full song bank has given title
     // EFFECTS: checks song list for song with given title, returns true if found, otherwise returns false
     public boolean songListContains(String title) {
         for (Song song: songList) {
@@ -52,12 +52,12 @@ public class Playlist {
         return titleList;
     }
 
-    // EFFECTS: returns song list
+    // EFFECTS: returns the list of songs added as Song objects
     public ArrayList<Song> getSongList() {
         return songList;
     }
 
-    // EFFECTS: returns the list of song titles and artists
+    // EFFECTS: returns the list of songs added as "'title' by artist" strings
     public ArrayList<String> getTitleList() {
         return titleList;
     }

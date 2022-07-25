@@ -29,7 +29,7 @@ public class SongBank {
     }
 
     // MODIFIES: this
-    // EFFECTS: adds all pop songs to the song bank
+    // EFFECTS: adds all pop songs to the song database
     private void addAllPop() {
         // pop 2010-present
         songDatabase.add(new Song("Hello", "Adele", 2015, "pop", "2010-present"));
@@ -64,7 +64,7 @@ public class SongBank {
     }
 
     // MODIFIES: this
-    // EFFECTS: adds all r&b songs to the song bank
+    // EFFECTS: adds all r&b songs to the song database
     private void addAllRB() {
         // r&b 2010-present
         songDatabase.add(new Song("Thinkin Bout You", "Frank Ocean",
@@ -92,7 +92,7 @@ public class SongBank {
     }
 
     // MODIFIES: this
-    // EFFECTS: adds all rock songs to the song bank
+    // EFFECTS: adds all rock songs to the song database
     private void addAllRock() {
         // rock 2010-present
         songDatabase.add(new Song("Heathens", "twenty one pilots",
@@ -124,7 +124,7 @@ public class SongBank {
     }
 
     // MODIFIES: this
-    // EFFECTS: adds all country songs to the song bank
+    // EFFECTS: adds all country songs to the song database
     private void addAllCountry() {
         // country 2010-present
         songDatabase.add(new Song("Forever After All", "Luke Combs",
@@ -157,10 +157,9 @@ public class SongBank {
                 1981, "country", "pre-1990"));
     }
 
-    // REQUIRES: genre and release have a non-zero length
+    // REQUIRES: genre and release have a non-zero length AND genre and release are valid options
     // MODIFIES: this
-    // EFFECTS: filters song database with given genre and release
-    //          adds matching songs to lists of recommendations
+    // EFFECTS: filters song database with given genre and release, adds matching songs to lists of recommendations
     public void applyFilters(String genre, String release) {
         for (Song s: songDatabase) {
             if ((genre.equals(s.getGenre())) && (release.equals(s.getReleasePeriod()))) {
@@ -170,24 +169,9 @@ public class SongBank {
         }
     }
 
-    // REQUIRES: title has a non-zero length
+    // REQUIRES: title has a non-zero length AND a song in full song database has given title
     // MODIFIES: this
-    // EFFECTS: searches full song database for song with given title
-    //          returns song if found, otherwise returns null
-    public Song findSong(String title) {
-        addAllSongs();
-        for (Song song: songDatabase) {
-            if (title.equals(song.getTitle())) {
-                return song;
-            }
-        }
-        return null;
-    }
-
-    // REQUIRES: title has a non-zero length
-    // MODIFIES: this
-    // EFFECTS: searches full song database for song with given title
-    //          returns song if found, otherwise returns null
+    // EFFECTS: searches full song database for song with given title, returns song if found, otherwise returns null
     public Song getSong(String title) {
         for (Song s: songDatabase) {
             if (s.getTitle().equals(title)) {
@@ -202,7 +186,7 @@ public class SongBank {
         return songDatabase;
     }
 
-    // EFFECTS: returns the recommendation list consisting of song name and artist
+    // EFFECTS: returns the recommendation list consisting of song title and artist
     public ArrayList<String> getMyRecTitle() {
         return myRecTitle;
     }

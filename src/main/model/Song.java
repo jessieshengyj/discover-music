@@ -9,7 +9,7 @@ public class Song {
     private String releasePeriod;
 
     // REQUIRES: title, artist, genre, and release have a non-zero length AND year >= 0
-    // EFFECTS: constructs with given title, artist, year (of release), genre, and release (period)
+    // EFFECTS: constructs a song with given title, artist, year (of release), genre, and release (period)
     public Song(String title, String artist, int year, String genre, String release) {
         this.title = title;
         this.artist = artist;
@@ -18,7 +18,7 @@ public class Song {
         this.releasePeriod = release;
     }
 
-    // EFFECTS: returns title of song
+    // EFFECTS: returns title of the song
     public String getTitle() {
         return title;
     }

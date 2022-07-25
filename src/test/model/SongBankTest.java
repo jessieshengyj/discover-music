@@ -48,14 +48,6 @@ public class SongBankTest {
     }
 
     @Test
-    void testFindSong() {
-        sb.getSongDatabase().add(hello);
-        assertEquals(hello, sb.findSong("Hello"));
-
-        assertEquals(null, sb.findSong("Test Song"));
-    }
-
-    @Test
     void getSong() {
         assertEquals(null, sb.getSong("Test Song"));
         assertEquals(null, sb.getSong("Hello"));
@@ -65,6 +57,5 @@ public class SongBankTest {
 
         sb.addAllSongs();
         assertEquals(null, sb.getSong("Test Song"));
-
     }
 }

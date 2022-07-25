@@ -57,9 +57,6 @@ public class MusicRecApp {
                 System.out.println("Your playlist is currently empty:");
             }
             System.out.println(playlist.songsToNames());
-            displayMenu();
-            String s = input.next();
-            processCommand(s);
         } else if (command.equals("s")) {
             chooseGenre();
         } else {
