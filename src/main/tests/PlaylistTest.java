@@ -67,5 +67,13 @@ public class PlaylistTest {
         assertTrue(playlist.getTitleList().contains("'Hello' by Adele"));
         assertTrue(playlist.getTitleList().contains("'Paradise' by Coldplay"));
         assertTrue(playlist.getTitleList().contains("'Love Story' by Taylor Swift"));
+
+        playlist.getSongList().add(new Song("Hello", "Adele", 2015, "pop", "2010-present"));
+        playlist.songsToNames();
+
+        assertEquals(3, playlist.getTitleList().size());
+        assertTrue(playlist.getTitleList().contains("'Hello' by Adele"));
+        assertTrue(playlist.getTitleList().contains("'Paradise' by Coldplay"));
+        assertTrue(playlist.getTitleList().contains("'Love Story' by Taylor Swift"));
     }
 }

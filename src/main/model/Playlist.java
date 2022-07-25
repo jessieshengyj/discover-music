@@ -61,9 +61,4 @@ public class Playlist {
     public ArrayList<String> getTitleList() {
         return titleList;
     }
-
-    // EFFECTS: returns the song database
-    public SongBank getAllSongs() {
-        return allSongs;
-    }
 }
