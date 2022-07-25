@@ -54,13 +54,17 @@ public class MusicRecApp {
     private void processCommand(String command) {
         if (command.equals("p")) {
             if (playlist.getSongList().isEmpty()) {
-                System.out.println("Your playlist is currently empty:");
+                System.out.println("Your playlist is currently empty :(");
+            } else {
+                System.out.println("Your Playlist:");
             }
-            System.out.println(playlist.songsToNames());
+            for (String s: playlist.songsToNames()) {
+                System.out.println(s);
+            }
         } else if (command.equals("s")) {
             chooseGenre();
         } else {
-            System.out.println("Invalid input... please re-enter :(");
+            System.out.println("Invalid input... please re-enter");
             String s = input.next();
             processCommand(s);
         }
@@ -80,7 +84,7 @@ public class MusicRecApp {
             System.out.println("You chose " + command + " music!");
             chooseRelease();
         } else {
-            System.out.println("Invalid input... please re-enter :(");
+            System.out.println("Invalid input... please re-enter");
             chooseGenre();
         }
     }
@@ -98,13 +102,16 @@ public class MusicRecApp {
                 || command.equals("1990-1999") || command.equals("pre-1990")) {
             this.release = command;
             System.out.println("You chose music from " + command + "!");
+            System.out.println();
             System.out.println("Here are some recommended songs:");
             allSongs.applyFilters(genre, release);
             songRecs = allSongs.getMyRecSong();
-            System.out.println(allSongs.getMyRecTitle());
+            for (String s: allSongs.getMyRecTitle()) {
+                System.out.println(s);
+            }
             chooseAddOrQuit();
         } else {
-            System.out.println("Invalid input... please re-enter :(");
+            System.out.println("Invalid input... please re-enter");
             chooseRelease();
         }
     }
@@ -124,7 +131,7 @@ public class MusicRecApp {
             System.out.println("Taking you back to the home screen...");
             init();
         } else {
-            System.out.println("Invalid input... please re-enter :(");
+            System.out.println("Invalid input... please re-enter");
             chooseAddOrQuit();
         }
     }
@@ -141,7 +148,7 @@ public class MusicRecApp {
             System.out.println("The song can now be found in your playlist •ᴗ•");
             playlist.addSong(command);
         } else {
-            System.out.println("Invalid input... please re-enter :(");
+            System.out.println("Invalid input... please re-enter");
             chooseSongsForPlaylist();
         }
 
