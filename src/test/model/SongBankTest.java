@@ -1,7 +1,5 @@
-package tests;
+package model;
 
-import model.Song;
-import model.SongBank;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
