@@ -3,7 +3,11 @@ package ui;
 import model.SongBank;
 import model.Playlist;
 import model.Song;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -11,6 +15,7 @@ import java.util.Scanner;
 // based on Teller app: link below
 // https://github.students.cs.ubc.ca/CPSC210/TellerApp.git
 public class MusicRecApp {
+    private static final String JSON_STORE = "./data/playlist.json";
     private SongBank allSongs;
     private ArrayList<Song> songRecs;
     private Playlist playlist;
@@ -18,10 +23,14 @@ public class MusicRecApp {
     private Boolean keepGoing;
     private String genre;
     private String release;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     // EFFECTS: runs the music recommendation application
-    public MusicRecApp() {
+    public MusicRecApp() throws FileNotFoundException {
         playlist = new Playlist();
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
         runMusicRecApp();
     }
 
@@ -61,13 +70,78 @@ public class MusicRecApp {
             for (String s: playlist.songsToNames()) {
                 System.out.println(s);
             }
-        } else if (command.equals("s")) {
+            playlistOptions();
+        } else if (command.equals("b")) {
             chooseGenre();
+        } else if (command.equals("s")) {
+            savePlaylist();
+        } else if (command.equals("l")) {
+            loadPlaylist();
         } else {
             System.out.println("Invalid input... please re-enter");
-            String s = input.next();
-            processCommand(s);
         }
+    }
+
+    private void savePlaylist() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(playlist);
+            jsonWriter.close();
+            System.out.println("Saved your playlist to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    private void loadPlaylist() {
+        try {
+            playlist = jsonReader.read();
+            System.out.println("Loaded your playlist from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
+    }
+
+    private void playlistOptions() {
+        keepGoing = true;
+
+        System.out.println("");
+        System.out.println("Type and enter 'home' to return to home page");
+        System.out.println("Type and enter 'remove' to remove a song from your playlist");
+
+        String command = input.next();
+
+        if (command.equals("home")) {
+            System.out.println("Taking you back to the home screen...");
+            init();
+        } else if (command.equals("remove")) {
+            removeSong();
+        } else {
+            System.out.println("Invalid input... please re-enter");
+            playlistOptions();
+        }
+    }
+
+    private void removeSong() {
+        keepGoing = true;
+
+        System.out.println(" ");
+        System.out.println("Type and enter the song's title to remove from your playlist");
+        System.out.println("(Ex. to remove 'Hello' by Adele, enter 'Hello')");
+
+        String command = input.next();
+
+        if (playlist.songListContains((command))) {
+            System.out.println("You have removed: '" + allSongs.getSong(command).getTitle()
+                    + "' by " + allSongs.getSong(command).getArtist());
+            System.out.println("The song is no longer in your playlist.");
+            playlist.removeSong(command);
+        } else {
+            System.out.println("Invalid input... please re-enter");
+            removeSong();
+        }
+
+        init();
     }
 
     // MODIFIES: this
@@ -152,7 +226,7 @@ public class MusicRecApp {
             chooseSongsForPlaylist();
         }
 
-        init(); // to re-initialize recommendation list and make it empty
+        init();
     }
 
     // MODIFIES: this
@@ -168,8 +242,10 @@ public class MusicRecApp {
     private void displayMenu() {
         System.out.println();
         System.out.println("Welcome to the Music Recommendation Generator!");
-        System.out.println("\tType and enter 's' to START");
+        System.out.println("\tType and enter 'b' to BEGIN");
         System.out.println("\tType and enter 'p' to view current PLAYLIST");
+        System.out.println("\tType and enter 's' to SAVE playlist to file");
+        System.out.println("\tType and enter 'l' to LOAD playlist to file");
         System.out.println("\tType and enter 'e' to END program");
     }
 

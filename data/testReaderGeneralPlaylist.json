@@ -1,0 +1,30 @@
+{"songs": [
+    {
+        "artist": "Adele",
+        "year": 2015,
+        "release": "2010-present",
+        "genre": "pop",
+        "title": "Hello"
+    },
+    {
+        "artist": "Aerosmith",
+        "year": 2001,
+        "release": "2000-2009",
+        "genre": "rock",
+        "title": "Jaded"
+    },
+    {
+        "artist": "OneRepublic",
+        "year": 2013,
+        "release": "2010-present",
+        "genre": "pop",
+        "title": "Counting Stars"
+    },
+    {
+        "artist": "Coldplay",
+        "year": 2009,
+        "release": "2000-2009",
+        "genre": "pop",
+        "title": "Paradise"
+    }
+]}

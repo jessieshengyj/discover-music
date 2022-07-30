@@ -1,9 +1,13 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 
 // Represents a playlist having lists of songs added (as song objects or string) and a song bank
-public class Playlist {
+public class Playlist implements Writable {
     private ArrayList<Song> songList;
     private ArrayList<String> titleList;
     private SongBank allSongs;
@@ -27,6 +31,18 @@ public class Playlist {
             allSongs.addAllSongs();
             songList.add(allSongs.getSong(title));
             return true;
+        }
+    }
+
+    public boolean removeSong(String title) {
+        if (songListContains(title)) {
+            allSongs.addAllSongs();
+            songList.remove(allSongs.getSong(title));
+            titleList.remove("'" + allSongs.getSong(title).getTitle() + "' by "
+                    + allSongs.getSong(title).getArtist());
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -60,5 +76,24 @@ public class Playlist {
     // EFFECTS: returns the list of songs added as "'title' by artist" strings
     public ArrayList<String> getTitleList() {
         return titleList;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+
+        json.put("songs", songsToJson());
+
+        return json;
+    }
+
+    public JSONArray songsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Song s : songList) {
+            jsonArray.put(s.toJson());
+        }
+
+        return jsonArray;
     }
 }

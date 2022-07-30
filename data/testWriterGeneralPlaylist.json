@@ -1,0 +1,16 @@
+{"songs": [
+    {
+        "artist": "Adele",
+        "year": 2015,
+        "release": "2010-present",
+        "genre": "pop",
+        "title": "Hello"
+    },
+    {
+        "artist": "Taylor Swift",
+        "year": 2008,
+        "release": "2000-2009",
+        "genre": "pop",
+        "title": "Love Story"
+    }
+]}

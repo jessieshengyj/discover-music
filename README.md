@@ -24,3 +24,6 @@ for newly discovered songs
 - As a user, I want to be able to view my updated playlist
 - As a user, I want to be able to return to the home page and restart program
 - As a user, I want to be able to end the program from the home page
+- As a user, when I select the quit option from the application menu, I want to be reminded and have the *option* 
+to save my playlist to file 
+- As a user, when I start the application, I want to be given the *option* to load my playlist from file

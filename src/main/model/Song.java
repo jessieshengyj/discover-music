@@ -1,7 +1,10 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 // Represents a song having a title, artist, year of release, genre, and release period
-public class Song {
+public class Song implements Writable {
     private String title;
     private String artist;
     private int releaseYear;
@@ -41,5 +44,18 @@ public class Song {
     // EFFECTS: returns release period of the song
     public String getReleasePeriod() {
         return releasePeriod;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+
+        json.put("title", title);
+        json.put("artist", artist);
+        json.put("year", releaseYear);
+        json.put("genre", genre);
+        json.put("release", releasePeriod);
+
+        return json;
     }
 }
