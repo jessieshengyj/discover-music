@@ -1,7 +1,23 @@
-{"songs": [{
-    "artist": "Bastille",
-    "year": 2013,
-    "release": "2010-present",
-    "genre": "rock",
-    "title": "Pompeii"
-}]}
+{"songs": [
+    {
+        "artist": "Khalid",
+        "year": 2016,
+        "release": "2010-present",
+        "genre": "r&b",
+        "title": "Location"
+    },
+    {
+        "artist": "Taylor Swift",
+        "year": 2007,
+        "release": "2000-2009",
+        "genre": "country",
+        "title": "Our Song"
+    },
+    {
+        "artist": "Bastille",
+        "year": 2013,
+        "release": "2010-present",
+        "genre": "rock",
+        "title": "Pompeii"
+    }
+]}
