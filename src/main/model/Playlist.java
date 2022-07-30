@@ -34,6 +34,9 @@ public class Playlist implements Writable {
         }
     }
 
+    // REQUIRES: title has a non-zero length AND a song in current playlist has given title
+    // MODIFIES: this
+    // EFFECTS: if current playlist contains song with given title, removes song from playlist, otherwise returns false
     public boolean removeSong(String title) {
         if (songListContains(title)) {
             allSongs.addAllSongs();
@@ -87,6 +90,7 @@ public class Playlist implements Writable {
         return json;
     }
 
+    // EFFECTS: returns songs in this playlist as a JSON array
     public JSONArray songsToJson() {
         JSONArray jsonArray = new JSONArray();
 

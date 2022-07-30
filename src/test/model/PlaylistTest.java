@@ -36,6 +36,20 @@ public class PlaylistTest {
     }
 
     @Test
+    void testRemoveSong() {
+        allSongs.addAllSongs();
+
+        assertTrue(playlist.addSong("Hello"));
+        assertTrue(playlist.addSong("Paradise"));
+        assertTrue(playlist.addSong("Love Story"));
+
+        assertTrue(playlist.removeSong("Hello"));
+        assertTrue(playlist.removeSong("Love Story"));
+        assertFalse(playlist.removeSong("Riptide"));
+        assertTrue(playlist.removeSong("Paradise"));
+    }
+
+    @Test
     void testSongListContains() {
         assertFalse(playlist.songListContains("Hello"));
 

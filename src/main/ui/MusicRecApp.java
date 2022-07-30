@@ -66,11 +66,11 @@ public class MusicRecApp {
                 System.out.println("Your playlist is currently empty :(");
             } else {
                 System.out.println("Your Playlist:");
+                for (String s: playlist.songsToNames()) {
+                    System.out.println(s);
+                }
+                choosePlaylistOption();
             }
-            for (String s: playlist.songsToNames()) {
-                System.out.println(s);
-            }
-            playlistOptions();
         } else if (command.equals("b")) {
             chooseGenre();
         } else if (command.equals("s")) {
@@ -82,6 +82,7 @@ public class MusicRecApp {
         }
     }
 
+    // EFFECTS: saves the playlist to file
     private void savePlaylist() {
         try {
             jsonWriter.open();
@@ -93,6 +94,8 @@ public class MusicRecApp {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: loads playlist from file
     private void loadPlaylist() {
         try {
             playlist = jsonReader.read();
@@ -102,32 +105,32 @@ public class MusicRecApp {
         }
     }
 
-    private void playlistOptions() {
+    // MODIFIES: this
+    // EFFECTS: prompts user to choose to remove a song or quit and processes command
+    private void choosePlaylistOption() {
         keepGoing = true;
 
-        System.out.println("");
-        System.out.println("Type and enter 'home' to return to home page");
-        System.out.println("Type and enter 'remove' to remove a song from your playlist");
+        displayPlaylistOptions();
 
         String command = input.next();
 
-        if (command.equals("home")) {
+        if (command.equals("h")) {
             System.out.println("Taking you back to the home screen...");
             init();
-        } else if (command.equals("remove")) {
-            removeSong();
+        } else if (command.equals("r")) {
+            processRemoveSong();
         } else {
             System.out.println("Invalid input... please re-enter");
-            playlistOptions();
+            choosePlaylistOption();
         }
     }
 
-    private void removeSong() {
+    // MODIFIES: this
+    // EFFECTS: prompts user to select a song to remove from playlist and processes command
+    private void processRemoveSong() {
         keepGoing = true;
 
-        System.out.println(" ");
-        System.out.println("Type and enter the song's title to remove from your playlist");
-        System.out.println("(Ex. to remove 'Hello' by Adele, enter 'Hello')");
+        displayRemoveSongOptions();
 
         String command = input.next();
 
@@ -138,7 +141,7 @@ public class MusicRecApp {
             playlist.removeSong(command);
         } else {
             System.out.println("Invalid input... please re-enter");
-            removeSong();
+            processRemoveSong();
         }
 
         init();
@@ -199,9 +202,9 @@ public class MusicRecApp {
 
         String command = input.next();
 
-        if (command.equals("add")) {
+        if (command.equals("a")) {
             chooseSongsForPlaylist();
-        } else if (command.equals("home")) {
+        } else if (command.equals("h")) {
             System.out.println("Taking you back to the home screen...");
             init();
         } else {
@@ -213,6 +216,8 @@ public class MusicRecApp {
     // MODIFIES: this
     // EFFECTS: prompts user to select a song to add to playlist and processes command
     private void chooseSongsForPlaylist() {
+        keepGoing = true;
+
         displayAddSongChoices();
 
         String command = input.next();
@@ -249,6 +254,20 @@ public class MusicRecApp {
         System.out.println("\tType and enter 'e' to END program");
     }
 
+    // EFFECTS: displays playlist options to user
+    private void displayPlaylistOptions() {
+        System.out.println(" ");
+        System.out.println("Type and enter 'h' to return to home page");
+        System.out.println("Type and enter 'r' to remove a song from your playlist");
+    }
+
+    // EFFECTS: displays remove song instructions to user
+    private void displayRemoveSongOptions() {
+        System.out.println(" ");
+        System.out.println("Type and enter the song's title to remove from your playlist");
+        System.out.println("(Ex. to remove 'Hello' by Adele, enter 'Hello')");
+    }
+
     // EFFECTS: displays genre options to user
     private void displayGenreChoices() {
         System.out.println("\nInput a music genre from the following list, view playlist:");
@@ -277,7 +296,7 @@ public class MusicRecApp {
     // EFFECTS: displays add song or quit options to user
     private void displayAddOrQuit() {
         System.out.println();
-        System.out.println("Type and enter 'add' to add a song to your playlist");
-        System.out.println("Type and enter 'home' to return to home page");
+        System.out.println("Type and enter 'a' to add a song to your playlist");
+        System.out.println("Type and enter 'h' to return to home page");
     }
 }
