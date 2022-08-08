@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import persistence.Writable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 // Represents a playlist having lists of songs added (as song objects or string) and a song bank
 public class Playlist implements Writable {
@@ -52,7 +53,7 @@ public class Playlist implements Writable {
     // REQUIRES: title has a non-zero length AND a song in full song bank has given title
     // EFFECTS: checks song list for song with given title, returns true if found, otherwise returns false
     public boolean songListContains(String title) {
-        for (Song song: songList) {
+        for (Song song : songList) {
             if (title.equals(song.getTitle())) {
                 return true;
             }

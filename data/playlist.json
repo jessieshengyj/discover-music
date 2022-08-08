@@ -1,23 +1,128 @@
 {"songs": [
-    {
-        "artist": "Ne-Yo",
-        "year": 2005,
-        "release": "2000-2009",
-        "genre": "r&b",
-        "title": "So Sick"
-    },
-    {
-        "artist": "Taylor Swift",
-        "year": 2007,
-        "release": "2000-2009",
-        "genre": "country",
-        "title": "Our Song"
-    },
-    {
-        "artist": "Aerosmith",
-        "year": 2001,
-        "release": "2000-2009",
-        "genre": "rock",
-        "title": "Jaded"
-    }
+  {
+    "artist": "Ne-Yo",
+    "year": 2005,
+    "release": "2000-2009",
+    "genre": "r&b",
+    "title": "So Sick"
+  },
+  {
+    "artist": "Taylor Swift",
+    "year": 2007,
+    "release": "2000-2009",
+    "genre": "country",
+    "title": "Our Song"
+  },
+  {
+    "artist": "Aerosmith",
+    "year": 2001,
+    "release": "2000-2009",
+    "genre": "rock",
+    "title": "Jaded"
+  },
+  {
+    "artist": "Adele",
+    "year": 2015,
+    "release": "2010-present",
+    "genre": "pop",
+    "title": "Hello"
+  },
+  {
+    "artist": "3 Doors Down",
+    "year": 2000,
+    "release": "2000-2009",
+    "genre": "rock",
+    "title": "Kryptonite"
+  },
+  {
+    "artist": "Amy Winehouse",
+    "year": 2006,
+    "release": "2000-2009",
+    "genre": "r&b",
+    "title": "Rehab"
+  },
+  {
+    "artist": "Kacey Musgraves",
+    "year": 2013,
+    "release": "2010-present",
+    "genre": "country",
+    "title": "Follow Your Arrow"
+  },
+  {
+    "artist": "twenty one pilots",
+    "year": 2016,
+    "release": "2010-present",
+    "genre": "rock",
+    "title": "Heathens"
+  },
+  {
+    "artist": "Bastille",
+    "year": 2013,
+    "release": "2010-present",
+    "genre": "rock",
+    "title": "Pompeii"
+  },
+  {
+    "artist": "WALK THE MOON",
+    "year": 2014,
+    "release": "2010-present",
+    "genre": "rock",
+    "title": "Shut Up and Dance"
+  },
+  {
+    "artist": "Westlife",
+    "year": 2000,
+    "release": "2000-2009",
+    "genre": "pop",
+    "title": "My Love"
+  },
+  {
+    "artist": "Coldplay",
+    "year": 2009,
+    "release": "2000-2009",
+    "genre": "pop",
+    "title": "Paradise"
+  },
+  {
+    "artist": "Taylor Swift",
+    "year": 2008,
+    "release": "2000-2009",
+    "genre": "pop",
+    "title": "Love Story"
+  },
+  {
+    "artist": "Backstreet Boys",
+    "year": 1999,
+    "release": "1990-1999",
+    "genre": "pop",
+    "title": "I Want It That Way"
+  },
+  {
+    "artist": "Vance Joy",
+    "year": 2013,
+    "release": "2010-present",
+    "genre": "pop",
+    "title": "Riptide"
+  },
+  {
+    "artist": "Eagles",
+    "year": 1976,
+    "release": "pre-1990",
+    "genre": "rock",
+    "title": "Hotel California"
+  },
+  {
+    "artist": "Daniel Caesar",
+    "year": 2017,
+    "release": "2010-present",
+    "genre": "r&b",
+    "title": "Best Part"
+  },
+  {
+    "artist": "Khalid",
+    "year": 2016,
+    "release": "2010-present",
+    "genre": "r&b",
+    "title": "Location"
+  }
 ]}
