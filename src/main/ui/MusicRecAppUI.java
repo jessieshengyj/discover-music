@@ -12,12 +12,15 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+// Music Recommendation Generator application
 public class MusicRecAppUI extends JFrame implements ListSelectionListener {
     public static final int WIDTH_HOME = 425;
     public static final int HEIGHT_HOME = 760;
@@ -25,7 +28,7 @@ public class MusicRecAppUI extends JFrame implements ListSelectionListener {
     public static final int HEIGHT_OTHER = 320;
 
     private JFrame frameHome;
-    private JFrame frameChoose;
+    private JFrame frameDiscover;
     private JFrame frameDatabase;
 
     private Playlist playlist;
@@ -36,9 +39,9 @@ public class MusicRecAppUI extends JFrame implements ListSelectionListener {
     private JsonReader jsonReader;
 
     private Font fontSmall;
+    private Font fontItalic;
     private Color green;
 
-    private ImageIcon welcomeIcon;
     private ImageIcon playlistIcon;
     private ImageIcon errorIcon;
 
@@ -76,8 +79,8 @@ public class MusicRecAppUI extends JFrame implements ListSelectionListener {
     private JList list3;
     private DefaultListModel listModel3;
 
-    private static final String addSong = "Add Song (enter song title above)";
-    private static final String removeSong = "Remove Song";
+    private static final String addSong = "Add Song | ENTER";
+    private static final String removeSong = "Remove Song | BACKSPACE";
     private static final String beginProgram = "Begin Discovering";
     private static final String viewDatabase = "View Song Database";
     private static final String saveString = "Save Playlist";
@@ -85,7 +88,7 @@ public class MusicRecAppUI extends JFrame implements ListSelectionListener {
     private static final String quitProgram = "Quit Program";
     private static final String getRecommendation = "Get Recommendation";
 
-
+    // EFFECTS: runs the music recommendation application
     public MusicRecAppUI() {
         super("Music Generator");
 
@@ -95,7 +98,9 @@ public class MusicRecAppUI extends JFrame implements ListSelectionListener {
         initializeGraphics();
     }
 
-    private void initializeFieldsOne() {
+    // MODIFIES: this
+    // EFFECTS: initialize and sets fields for MusicRecAppUI
+    private void initializeFieldsTwo() {
         frameHome = new JFrame();
 
         playlist = new Playlist();
@@ -120,19 +125,24 @@ public class MusicRecAppUI extends JFrame implements ListSelectionListener {
         list3.setVisibleRowCount(5);
     }
 
-    private void initializeFieldsTwo() {
+    // MODIFIES: this
+    // EFFECTS: initialize and sets fields for MusicRecAppUI
+    private void initializeFieldsThree() {
         mainPanel = new JPanel();
         titlePanel = new JPanel();
         playlistPanel = new JScrollPane(list);
         buttonsPanel = new JPanel();
 
         enterSongTitle = new JTextField();
+        enterSongTitle.setText("enter title here");
+        enterSongTitle.setFont(fontItalic);
+        enterSongTitle.setHorizontalAlignment(SwingConstants.CENTER);
 
         database = new JScrollPane(list2);
         frameDatabase = new JFrame();
 
         // for BEGIN LISTENER
-        frameChoose = new JFrame();
+        frameDiscover = new JFrame();
         recommendationPanel = new JPanel();
 
         songGenre = new JTextField();
@@ -143,11 +153,18 @@ public class MusicRecAppUI extends JFrame implements ListSelectionListener {
         suggestions = new JScrollPane(list3);
     }
 
-    private void initializeFieldsThree() {
+    // images from this method are from:
+    // https://icons8.com/icon/102000/error-cloud
+    // https://icons8.com/icon/24520/playlist
+    // MODIFIES: this
+    // EFFECTS: initializes and sets fields for MusicRecAppUI
+    private void initializeFieldsOne() {
         fontSmall = new Font("Arial", Font.PLAIN, 11);
+        fontItalic = new Font("Arial", Font.ITALIC, 13);
         green = new Color(113, 138, 106);
 
-        // resize method based on: https://stackoverflow.com/questions/6714045/how-to-resize-jlabel-imageicon
+        // image icon resize method based on:
+        // https://stackoverflow.com/questions/6714045/how-to-resize-jlabel-imageicon
         playlistIcon = new ImageIcon("./img/playlist.png");
         Image playlistImg = playlistIcon.getImage();
         Image playlistScaledImg = playlistImg.getScaledInstance(80, 80,  java.awt.Image.SCALE_SMOOTH);
@@ -162,6 +179,8 @@ public class MusicRecAppUI extends JFrame implements ListSelectionListener {
         jsonWriter = new JsonWriter(JSON_STORE);
     }
 
+    // MODIFIES: this
+    // EFFECTS: draws the frame for MusicRecAppUI
     private void initializeGraphics() {
         setTitle("Music Generator");
         setLayout(new BorderLayout());
@@ -178,6 +197,8 @@ public class MusicRecAppUI extends JFrame implements ListSelectionListener {
         setVisible(true);
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes buttons for buttonsPanel with text
     private void initializeButtons() {
         buttonAddSong = new JButton(addSong);
         buttonRemoveSong = new JButton(removeSong);
@@ -190,8 +211,13 @@ public class MusicRecAppUI extends JFrame implements ListSelectionListener {
 
         addButtons();
         addButtonActionListener();
+
+        addKeyListenerAddFunction();
+        addKeyListenerRemoveFunction();
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds buttons to buttonsPanel
     private void addButtons() {
         buttonsPanel.add(buttonBegin);
         buttonsPanel.add(enterSongTitle);
@@ -205,6 +231,8 @@ public class MusicRecAppUI extends JFrame implements ListSelectionListener {
         frameHome.add(buttonsPanel);
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds respective action listener to each button
     private void addButtonActionListener() {
         buttonBegin.addActionListener(new BeginListener());
         buttonAddSong.addActionListener(new AddListener());
@@ -215,6 +243,52 @@ public class MusicRecAppUI extends JFrame implements ListSelectionListener {
         buttonQuit.addActionListener(new QuitListener());
     }
 
+    // listener for add song function
+    private void addKeyListenerAddFunction() {
+        enterSongTitle.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            // MODIFIES: this
+            // EFFECTS: adds song to playlist if enter key is pressed
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    actionAddSong();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
+    }
+
+    // listener for remove song function
+    private void addKeyListenerRemoveFunction() {
+        list.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            // MODIFIES: this
+            // EFFECTS: removes song from playlist if backspace key is pressed and playlist is not empty
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if ((e.getKeyCode() == KeyEvent.VK_BACK_SPACE) && (listModel.getSize() != 0)) {
+                    actionRemoveSong();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
+    }
+
+    // MODIFIES: this
+    // EFFECTS: initializes panels for application's home page
     private void initializePanels() {
         titlePanel.setLayout(new BorderLayout());
         titlePanel.setBackground(Color.WHITE);
@@ -230,12 +304,16 @@ public class MusicRecAppUI extends JFrame implements ListSelectionListener {
         initializeMainPanel();
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes the buttons panel
     private void initializeButtonsPanel() {
         buttonsPanel.setLayout(new GridLayout(8, 1));
         buttonsPanel.setBackground(Color.WHITE);
         add(buttonsPanel, BorderLayout.SOUTH);
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes the main panel for displaying playlist with borders
     private void initializeMainPanel() {
         JPanel borderNorth = new JPanel();
         JPanel borderEast = new JPanel();
@@ -248,7 +326,7 @@ public class MusicRecAppUI extends JFrame implements ListSelectionListener {
         borderWest.setBackground(green);
         borderNorth.setPreferredSize(new Dimension(55, 80));
         borderEast.setPreferredSize(new Dimension(70, 70));
-        borderSouth.setPreferredSize(new Dimension(55, 80));
+        borderSouth.setPreferredSize(new Dimension(55, 70));
         borderWest.setPreferredSize(new Dimension(70, 70));
 
         addPlaylistText(borderNorth);
@@ -263,6 +341,8 @@ public class MusicRecAppUI extends JFrame implements ListSelectionListener {
         mainPanel.add(playlistPanel, BorderLayout.CENTER);
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds "Your Playlist" text to the main panel
     private void addPlaylistText(JPanel borderNorth) {
         borderNorth.setLayout(new BorderLayout());
         JPanel playlistTextPanel = new JPanel();
@@ -278,6 +358,8 @@ public class MusicRecAppUI extends JFrame implements ListSelectionListener {
         playlistTextPanel.add(yourPlaylist);
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes main label for application's home page
     private void initializeLabels() {
         homeLabel = new JLabel("Discover Music");
         homeLabel.setHorizontalAlignment(JLabel.CENTER);
@@ -287,19 +369,24 @@ public class MusicRecAppUI extends JFrame implements ListSelectionListener {
         titlePanel.add(homeLabel);
     }
 
-    public void displayMsg(String message, String title) {
+    // MODIFIES: this
+    // EFFECTS: displays given message with title and icon
+    public void displayMessage(String message, String title) {
         JOptionPane.showMessageDialog(playlistPanel, message, title, JOptionPane.PLAIN_MESSAGE, playlistIcon);
     }
 
-    public void warningMsg(String message, String title) {
+    // MODIFIES: this
+    // EFFECTS: displays given warning message with title and icon
+    public void warningMessage(String message, String title) {
         JOptionPane.showMessageDialog(playlistPanel, message, title, JOptionPane.PLAIN_MESSAGE, errorIcon);
     }
 
+    // this method is required by ListSelectionListener
     public void valueChanged(ListSelectionEvent e) {
         if (e.getValueIsAdjusting() == false) {
 
             if (!(list.getSelectedIndex() == -1)) {
-                //Selection, enable the fire button.
+                // Selection, enable buttons
                 buttonBegin.setEnabled(true);
                 buttonAddSong.setEnabled(true);
                 buttonRemoveSong.setEnabled(true);
@@ -310,32 +397,41 @@ public class MusicRecAppUI extends JFrame implements ListSelectionListener {
         }
     }
 
+    // listener for begin discovering button
     class BeginListener implements ActionListener {
 
+        // MODIFIES: this
+        // EFFECTS: initializes
         public void actionPerformed(ActionEvent e) {
-            initializeFieldsChoose();
-            initializeFrameChoose();
-            initializeGraphicsChoose();
-            addFrameChooseObjects();
+            initializeFieldsDiscover();
+            initializeFrameDiscover();
+            setGraphicsDiscover();
+            addFrameDiscoverObjects();
         }
 
-        private void initializeFieldsChoose() {
+        // MODIFIES: this
+        // EFFECTS: initializes fields for begin discovering frame
+        private void initializeFieldsDiscover() {
             genreLabel = new JLabel("Enter a music genre:");
             releaseLabel = new JLabel("Enter a release period:");
             showResultLabel = new JLabel("Showing results for:");
             buttonRecommendation = new JButton(getRecommendation);
         }
 
-        private void initializeFrameChoose() {
-            frameChoose.setLayout(new BorderLayout());
-            frameChoose.setMinimumSize(new Dimension(WIDTH_OTHER, HEIGHT_OTHER));
-            frameChoose.setMaximumSize(new Dimension(WIDTH_OTHER, HEIGHT_OTHER));
-            frameChoose.getContentPane().setBackground(Color.WHITE);
-            frameChoose.setResizable(true);
-            frameChoose.setTitle("Song Generator");
+        // MODIFIES: this
+        // EFFECTS: draws the window for begin discovering frame
+        private void initializeFrameDiscover() {
+            frameDiscover.setLayout(new BorderLayout());
+            frameDiscover.setMinimumSize(new Dimension(WIDTH_OTHER, HEIGHT_OTHER));
+            frameDiscover.setMaximumSize(new Dimension(WIDTH_OTHER, HEIGHT_OTHER));
+            frameDiscover.getContentPane().setBackground(Color.WHITE);
+            frameDiscover.setResizable(true);
+            frameDiscover.setTitle("Song Generator");
         }
 
-        private void initializeGraphicsChoose() {
+        // MODIFIES: this
+        // EFFECTS: sets the panels, labels, text fields, and buttons for begin discovering frama
+        private void setGraphicsDiscover() {
             recommendationPanel.setLayout(null);
             recommendationPanel.setBackground(green);
             recommendationPanel.setPreferredSize(new Dimension(WIDTH_OTHER, 160));
@@ -365,7 +461,9 @@ public class MusicRecAppUI extends JFrame implements ListSelectionListener {
             buttonRecommendation.setBounds(150, 95, 160, 28);
         }
 
-        private void addFrameChooseObjects() {
+        // MODIFIES: this
+        // EFFECTS: adds panels, labels, text fields, and buttons to begin discovering frame
+        private void addFrameDiscoverObjects() {
             recommendationPanel.add(genreLabel);
             recommendationPanel.add(releaseLabel);
             recommendationPanel.add(showResultLabel);
@@ -375,15 +473,20 @@ public class MusicRecAppUI extends JFrame implements ListSelectionListener {
             recommendationPanel.add(songGenre);
             recommendationPanel.add(songReleasePeriod);
 
-            frameChoose.add(recommendationPanel, BorderLayout.NORTH);
-            frameChoose.add(suggestions, BorderLayout.CENTER);
+            frameDiscover.add(recommendationPanel, BorderLayout.NORTH);
+            frameDiscover.add(suggestions, BorderLayout.CENTER);
 
-            frameChoose.setVisible(true);
+            frameDiscover.setVisible(true);
 
             buttonRecommendation.addActionListener(new RecommendationListener());
         }
 
+        // listener for get recommendation button
         private class RecommendationListener implements ActionListener {
+
+            // MODIFIES: this
+            // EFFECTS: filters song database and displays songs that satisfy user inputs
+            //          displays warning message if inputs are invalid
             public void actionPerformed(ActionEvent e) {
                 ArrayList<String> allGenres = new ArrayList<>();
                 Collections.addAll(allGenres, "pop", "r&b", "rock", "country");
@@ -404,7 +507,7 @@ public class MusicRecAppUI extends JFrame implements ListSelectionListener {
                     preferenceLabel.setText(genre + " songs from " + release);
                 } else {
                     Toolkit.getDefaultToolkit().beep();
-                    warningMsg2("Invalid genre or release period", "Error");
+                    warningMessageDiscover("Invalid Genre or Release Period", "Error");
                 }
 
                 songGenre.setText("pop, r&b, rock, country");
@@ -412,56 +515,82 @@ public class MusicRecAppUI extends JFrame implements ListSelectionListener {
             }
         }
 
-        private void warningMsg2(String message, String title) {
-            JOptionPane.showMessageDialog(frameChoose, message, title, JOptionPane.PLAIN_MESSAGE, errorIcon);
+        // MODIFIES: this
+        // EFFECTS: displays given warning message with title and icon
+        private void warningMessageDiscover(String message, String title) {
+            JOptionPane.showMessageDialog(frameDiscover, message, title, JOptionPane.PLAIN_MESSAGE, errorIcon);
         }
     }
 
+    // listener for add song button
     class AddListener implements ActionListener {
+
+        // MODIFIES: this
+        // EFFECTS: adds the song with title that matches user input
+        //          displays warning message if inputs are invalid
         public void actionPerformed(ActionEvent e) {
-            String title = enterSongTitle.getText();
+            actionAddSong();
+        }
+    }
 
-            if (title.equals("") || playlist.songListContains(title)
-                    || !songBank.getSongDatabase().contains(songBank.getSong(title))) {
-                Toolkit.getDefaultToolkit().beep();
-                enterSongTitle.requestFocusInWindow();
-                warningMsg("Invalid or Duplicate Song", "Error");
-                return;
+    // MODIFIES: this
+    // EFFECTS: adds the song with title that matches user input
+    //          displays warning message if inputs are invalid
+    private void actionAddSong() {
+        String title = enterSongTitle.getText();
+
+        if (title.equals("") || playlist.songListContains(title)
+                || !songBank.getSongDatabase().contains(songBank.getSong(title))) {
+            Toolkit.getDefaultToolkit().beep();
+            enterSongTitle.requestFocusInWindow();
+            warningMessage("Invalid or Duplicate Song", "Error");
+            return;
+        }
+        int index = listModel.size();
+
+        Song s = songBank.getSong(title);
+        listModel.add(listModel.size(), "'" + s.getTitle() + "' by " + s.getArtist());
+        playlist.addSong(title);
+
+        enterSongTitle.setText("enter title here");
+        enterSongTitle.setFont(fontItalic);
+        list.setSelectedIndex(index);
+        list.ensureIndexIsVisible(index);
+    }
+
+    // listener for remove song button
+    class RemoveListener implements ActionListener {
+
+        // MODIFIES: this
+        // EFFECTS: removes the song at the user's selected index
+        public void actionPerformed(ActionEvent e) {
+            actionRemoveSong();
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: removes the song at the user's selected index
+    private void actionRemoveSong() {
+        int index = list.getSelectedIndex();
+        listModel.remove(index);
+        playlist.getSongList().remove(index);
+
+        if (listModel.getSize() == 0) {
+            buttonRemoveSong.setEnabled(false);
+        } else {
+            if (index == listModel.getSize()) {
+                index--;
             }
-            int index = listModel.size();
-
-            Song s = songBank.getSong(title);
-            listModel.add(listModel.size(), "'" + s.getTitle() + "' by " + s.getArtist());
-            playlist.addSong(title);
-
-            enterSongTitle.setText("");
             list.setSelectedIndex(index);
             list.ensureIndexIsVisible(index);
         }
     }
 
-    class RemoveListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-
-            int index = list.getSelectedIndex();
-
-            listModel.remove(index);
-            playlist.getSongList().remove(index);
-
-            if (listModel.getSize() == 0) {
-                buttonRemoveSong.setEnabled(false);
-
-            } else {
-                if (index == listModel.getSize()) {
-                    index--;
-                }
-                list.setSelectedIndex(index);
-                list.ensureIndexIsVisible(index);
-            }
-        }
-    }
-
+    // listener for view database button
     class DataListener implements ActionListener {
+
+        // MODIFIES: this
+        // EFFECTS: displays the full song database
         public void actionPerformed(ActionEvent e) {
             frameDatabase.setLayout(new BorderLayout());
             frameDatabase.setMinimumSize(new Dimension(WIDTH_OTHER - 120, HEIGHT_OTHER));
@@ -482,25 +611,26 @@ public class MusicRecAppUI extends JFrame implements ListSelectionListener {
     class SaveListener implements ActionListener {
 
         // MODIFIES: this
-        // EFFECTS: loads playlist from file
+        // EFFECTS: saves the playlist to file
         public void actionPerformed(ActionEvent e) {
             try {
                 jsonWriter.open();
                 jsonWriter.write(playlist);
                 jsonWriter.close();
 
-                displayMsg("Saved playlist to " + JSON_STORE, "Save Playlist");
+                displayMessage("Saved playlist to " + JSON_STORE, "Save Playlist");
             } catch (FileNotFoundException fnf) {
-                warningMsg("Unable to write to file: " + JSON_STORE, "Save Playlist");
+                warningMessage("Unable to write to file: " + JSON_STORE, "Save Playlist");
                 Toolkit.getDefaultToolkit().beep();
             }
         }
     }
 
+    // listener for load playlist button
     class LoadListener implements ActionListener {
 
         // MODIFIES: this
-        // EFFECTS: loads playlist from file
+        // EFFECTS: loads the playlist from file
         public void actionPerformed(ActionEvent e) {
             try {
                 playlist = jsonReader.read();
@@ -511,9 +641,9 @@ public class MusicRecAppUI extends JFrame implements ListSelectionListener {
                 }
                 buttonRemoveSong.setEnabled(false);
 
-                displayMsg("Loaded playlist from " + JSON_STORE, "Load Playlist");
+                displayMessage("Loaded playlist from " + JSON_STORE, "Load Playlist");
             } catch (IOException ie) {
-                warningMsg("Unable to read from file: " + JSON_STORE, "Load Playlist");
+                warningMessage("Unable to read from file: " + JSON_STORE, "Load Playlist");
                 Toolkit.getDefaultToolkit().beep();
             }
         }
@@ -523,7 +653,7 @@ public class MusicRecAppUI extends JFrame implements ListSelectionListener {
     class QuitListener implements ActionListener {
 
         // MODIFIES: this
-        // EFFECTS: loads playlist from file
+        // EFFECTS: ends the program
         public void actionPerformed(ActionEvent e) {
             System.exit(0);
         }
