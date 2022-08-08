@@ -30,11 +30,11 @@ be an interesting process for me •◡•
 ### Instructions for Grader
 
 - You can generate the first required event by ***clicking*** the **Add Song button** to add the song corresponding 
-to the user input above, and clicking the **Remove Song button** to remove the selected song from the playlist
-- You can generate the second required event by ***pressing*** the **Enter key** and **Backspace key** to add inputted
-and remove selected songs
+to the user input above, and ***clicking*** the **Remove Song button** to remove the selected song from the playlist
+- You can generate the second required event by ***pressing*** the **Enter key** to add inputted songs, 
+and ***pressing*** the **Backspace key** to remove selected songs
 - You can generate other events by pressing the **Begin Discovering button** to input preferences to receive 
 recommendations, and pressing the **View Database button** to view the full song database
 - You can locate my visual component in the **alert messages**: error and success
-- You can save the state of my application by clicking the Save Playlist button
-- You can reload the state of my application by clicking the Load Playlist button
+- You can save the state of my application by clicking the **Save Playlist** button
+- You can reload the state of my application by clicking the **Load Playlist** button
