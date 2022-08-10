@@ -28,6 +28,7 @@ public class MusicRecApp {
 
     // EFFECTS: runs the music recommendation application
     public MusicRecApp() throws FileNotFoundException {
+        songRecs = new ArrayList<>();
         playlist = new Playlist();
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);

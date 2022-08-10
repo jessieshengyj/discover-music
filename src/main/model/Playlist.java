@@ -5,7 +5,6 @@ import org.json.JSONObject;
 import persistence.Writable;
 
 import java.util.ArrayList;
-import java.util.List;
 
 // Represents a playlist having lists of songs added (as song objects or string) and a song bank
 public class Playlist implements Writable {

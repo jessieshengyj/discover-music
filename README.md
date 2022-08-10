@@ -61,3 +61,12 @@ Song added to your playlist: 'Best Part' by Daniel Caesar
 
 Tue Aug 09 21:46:45 PDT 2022 <br />
 Song removed from your playlist: 'Hello' by Adele
+
+### Phase 4: Task 3
+
+Future changes to improve the cohesion, coupling, readability and overall structure of my code:
+- Remove the myRecSong field in SongBank, since the recommendation list could be obtained by filtering 
+the original songDatabase list
+- Increase robustness of my program by creating and handling exceptions (for invalid song genre, title, etc.), 
+rather than using if-else clauses in the MusicRecApp and MusicRecAppUI classes
+- Further refactor the UI class by extracting methods to capture behaviour
