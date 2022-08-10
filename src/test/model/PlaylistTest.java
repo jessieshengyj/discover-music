@@ -50,6 +50,31 @@ public class PlaylistTest {
     }
 
     @Test
+    void testRemoveIndex() {
+        assertTrue(playlist.addSong("Hello"));
+        assertTrue(playlist.addSong("Paradise"));
+        assertTrue(playlist.addSong("Love Story"));
+
+        playlist.removeIndex(2);
+        assertEquals(2, playlist.getSongList().size());
+        assertTrue(playlist.songListContains("Hello"));
+        assertTrue(playlist.songListContains("Paradise"));
+        assertFalse(playlist.songListContains("Love Story"));
+
+        playlist.removeIndex(0);
+        assertEquals(1, playlist.getSongList().size());
+        assertFalse(playlist.songListContains("Hello"));
+        assertTrue(playlist.songListContains("Paradise"));
+        assertFalse(playlist.songListContains("Love Story"));
+
+        playlist.removeIndex(0);
+        assertEquals(0, playlist.getSongList().size());
+        assertFalse(playlist.songListContains("Hello"));
+        assertFalse(playlist.songListContains("Paradise"));
+        assertFalse(playlist.songListContains("Love Story"));
+    }
+
+    @Test
     void testSongListContains() {
         assertFalse(playlist.songListContains("Hello"));
 

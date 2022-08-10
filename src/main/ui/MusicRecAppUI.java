@@ -1,5 +1,7 @@
 package ui;
 
+import model.Event;
+import model.EventLog;
 import model.Playlist;
 import model.Song;
 import model.SongBank;
@@ -98,6 +100,32 @@ public class MusicRecAppUI extends JFrame implements ListSelectionListener {
         initializeGraphics();
     }
 
+    // images from this method are from:
+    // https://icons8.com/icon/102000/error-cloud
+    // https://icons8.com/icon/24520/playlist
+    // MODIFIES: this
+    // EFFECTS: initializes and sets fields for MusicRecAppUI
+    private void initializeFieldsOne() {
+        fontSmall = new Font("Arial", Font.PLAIN, 11);
+        fontItalic = new Font("Arial", Font.ITALIC, 13);
+        green = new Color(113, 138, 106);
+
+        // image icon resize method based on:
+        // https://stackoverflow.com/questions/6714045/how-to-resize-jlabel-imageicon
+        playlistIcon = new ImageIcon("./img/playlist.png");
+        Image playlistImg = playlistIcon.getImage();
+        Image playlistScaledImg = playlistImg.getScaledInstance(80, 80,  java.awt.Image.SCALE_SMOOTH);
+        playlistIcon = new ImageIcon(playlistScaledImg);
+
+        errorIcon = new ImageIcon("./img/error.png");
+        Image errorImg = errorIcon.getImage();
+        Image errorScaledImg = errorImg.getScaledInstance(80, 80,  java.awt.Image.SCALE_SMOOTH);
+        errorIcon = new ImageIcon(errorScaledImg);
+
+        jsonReader = new JsonReader(JSON_STORE);
+        jsonWriter = new JsonWriter(JSON_STORE);
+    }
+
     // MODIFIES: this
     // EFFECTS: initialize and sets fields for MusicRecAppUI
     private void initializeFieldsTwo() {
@@ -151,32 +179,6 @@ public class MusicRecAppUI extends JFrame implements ListSelectionListener {
         preferenceLabel = new JLabel();
 
         suggestions = new JScrollPane(list3);
-    }
-
-    // images from this method are from:
-    // https://icons8.com/icon/102000/error-cloud
-    // https://icons8.com/icon/24520/playlist
-    // MODIFIES: this
-    // EFFECTS: initializes and sets fields for MusicRecAppUI
-    private void initializeFieldsOne() {
-        fontSmall = new Font("Arial", Font.PLAIN, 11);
-        fontItalic = new Font("Arial", Font.ITALIC, 13);
-        green = new Color(113, 138, 106);
-
-        // image icon resize method based on:
-        // https://stackoverflow.com/questions/6714045/how-to-resize-jlabel-imageicon
-        playlistIcon = new ImageIcon("./img/playlist.png");
-        Image playlistImg = playlistIcon.getImage();
-        Image playlistScaledImg = playlistImg.getScaledInstance(80, 80,  java.awt.Image.SCALE_SMOOTH);
-        playlistIcon = new ImageIcon(playlistScaledImg);
-
-        errorIcon = new ImageIcon("./img/error.png");
-        Image errorImg = errorIcon.getImage();
-        Image errorScaledImg = errorImg.getScaledInstance(80, 80,  java.awt.Image.SCALE_SMOOTH);
-        errorIcon = new ImageIcon(errorScaledImg);
-
-        jsonReader = new JsonReader(JSON_STORE);
-        jsonWriter = new JsonWriter(JSON_STORE);
     }
 
     // MODIFIES: this
@@ -573,7 +575,7 @@ public class MusicRecAppUI extends JFrame implements ListSelectionListener {
     private void actionRemoveSong() {
         int index = list.getSelectedIndex();
         listModel.remove(index);
-        playlist.getSongList().remove(index);
+        playlist.removeIndex(index);
 
         if (listModel.getSize() == 0) {
             buttonRemoveSong.setEnabled(false);
@@ -655,7 +657,15 @@ public class MusicRecAppUI extends JFrame implements ListSelectionListener {
         // MODIFIES: this
         // EFFECTS: ends the program
         public void actionPerformed(ActionEvent e) {
+            printLog();
             System.exit(0);
+        }
+    }
+
+    // EFFECT: prints the current log instance onto the console
+    private void printLog() {
+        for (Event next : EventLog.getInstance()) {
+            System.out.println(next.getDate() + "\n" + next.getDescription() + "\n");
         }
     }
 }

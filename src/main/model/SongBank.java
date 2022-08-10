@@ -19,21 +19,21 @@ public class SongBank {
     // MODIFIES: this
     // EFFECTS: adds all songs to the song database
     public void addAllSongs() {
-        addAllPop();
-
+        addAllPopOne();
+        addAllPopTwo();
         addAllRB();
-
         addAllRock();
-
-        addAllCountry();
+        addAllCountryOne();
+        addALlCountryTwo();
     }
 
     // MODIFIES: this
     // EFFECTS: adds all pop songs to the song database
-    private void addAllPop() {
+    private void addAllPopOne() {
         // pop 2010-present
         songDatabase.add(new Song("Hello", "Adele", 2015, "pop", "2010-present"));
-        songDatabase.add(new Song("I Like Me Better", "Lauv", 2017, "pop", "2010-present"));
+        songDatabase.add(new Song("I Like Me Better", "Lauv",
+                2017, "pop", "2010-present"));
         songDatabase.add(new Song("Watermelon Sugar", "Harry Styles", 2020,
                 "pop", "2010-present"));
         songDatabase.add(new Song("Best Day Of My Life", "American Authors",
@@ -43,10 +43,15 @@ public class SongBank {
                 2013, "pop", "2010-present"));
 
         // pop 2000-2009
-        songDatabase.add(new Song("Love Story", "Taylor Swift", 2008, "pop", "2000-2009"));
+        songDatabase.add(new Song("Love Story", "Taylor Swift",
+                2008, "pop", "2000-2009"));
         songDatabase.add(new Song("My Love", "Westlife", 2000, "pop", "2000-2009"));
         songDatabase.add(new Song("Paradise", "Coldplay", 2009, "pop", "2000-2009"));
+    }
 
+    // MODIFIES: this
+    // EFFECTS: adds all pop songs to the song database
+    private void addAllPopTwo() {
         // pop 1990-1999
         songDatabase.add(new Song("I Want It That Way", "Backstreet Boys",
                 1999, "pop", "1990-1999"));
@@ -69,7 +74,8 @@ public class SongBank {
         // r&b 2010-present
         songDatabase.add(new Song("Thinkin Bout You", "Frank Ocean",
                 2012, "r&b", "2010-present"));
-        songDatabase.add(new Song("Best Part", "Daniel Caesar", 2017, "r&b", "2010-present"));
+        songDatabase.add(new Song("Best Part", "Daniel Caesar",
+                2017, "r&b", "2010-present"));
         songDatabase.add(new Song("Location", "Khalid", 2016, "r&b", "2010-present"));
 
         // r&b 2000-2009
@@ -102,7 +108,8 @@ public class SongBank {
                 2014, "rock", "2010-present"));
 
         // rock 2000-2009
-        songDatabase.add(new Song("Kryptonite", "3 Doors Down", 2000, "rock", "2000-2009"));
+        songDatabase.add(new Song("Kryptonite", "3 Doors Down",
+                2000, "rock", "2000-2009"));
         songDatabase.add(new Song("Jaded", "Aerosmith", 2001, "rock", "2000-2009"));
         songDatabase.add(new Song("Snow (Hey Oh)", "Red Hot Chili Peppers",
                 2006, "rock", "2000-2009"));
@@ -118,28 +125,35 @@ public class SongBank {
         songDatabase.add(new Song("Right Here Waiting", "Richard Marx",
                 1989, "rock", "pre-1990"));
         songDatabase.add(new Song("We Will Rock You", "Queen", 1977, "rock", "pre-1990"));
-        songDatabase.add(new Song("Hotel California", "Eagles", 1976, "rock", "pre-1990"));
+        songDatabase.add(new Song("Hotel California", "Eagles",
+                1976, "rock", "pre-1990"));
         songDatabase.add(new Song("Wish You Were Here", "Pink Floyd",
                 1976, "rock", "pre-1990"));
     }
 
     // MODIFIES: this
     // EFFECTS: adds all country songs to the song database
-    private void addAllCountry() {
+    private void addAllCountryOne() {
         // country 2010-present
         songDatabase.add(new Song("Forever After All", "Luke Combs",
                 2020, "country", "2010-present"));
-        songDatabase.add(new Song("Tequila", "Dan + Shay", 2018, "country", "2010-present"));
+        songDatabase.add(new Song("Tequila", "Dan + Shay",
+                2018, "country", "2010-present"));
         songDatabase.add(new Song("Follow Your Arrow", "Kacey Musgraves",
                 2013, "country", "2010-present"));
 
         // country 2000-2009
-        songDatabase.add(new Song("Our Song", "Taylor Swift", 2007, "country", "2000-2009"));
+        songDatabase.add(new Song("Our Song", "Taylor Swift",
+                2007, "country", "2000-2009"));
         songDatabase.add(new Song("Watching Airplanes", "Gary Allan",
                 2007, "country", "2000-2009"));
         songDatabase.add(new Song("Live Like You Were Dying", "Tim McGraw",
                 2004, "country", "2000-2009"));
+    }
 
+    // MODIFIES: this
+    // EFFECTS: adds all country songs to the song database
+    private void addALlCountryTwo() {
         // country 1990-1999
         songDatabase.add(new Song("Friends in Low Places", "Garth Brooks",
                 1990, "country", "1990-1999"));
@@ -167,6 +181,8 @@ public class SongBank {
                 myRecSong.add(s);
             }
         }
+        EventLog.getInstance().logEvent(new Event("Searching for "
+                + genre + " songs from " + release + "."));
     }
 
     // REQUIRES: title has a non-zero length AND a song in full song database has given title

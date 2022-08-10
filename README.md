@@ -38,3 +38,26 @@ recommendations, and pressing the **View Database button** to view the full song
 - You can locate my visual component in the **alert messages**: error and success
 - You can save the state of my application by clicking the **Save Playlist** button
 - You can reload the state of my application by clicking the **Load Playlist** button
+
+### Phase 4: Task 2
+
+Tue Aug 09 21:46:14 PDT 2022 <br />
+Song added to your playlist: 'Hello' by Adele
+
+Tue Aug 09 21:46:19 PDT 2022 <br />
+Song added to your playlist: 'Paradise' by Coldplay
+
+Tue Aug 09 21:46:26 PDT 2022 <br />
+Song added to your playlist: 'Riptide' by Vance Joy
+
+Tue Aug 09 21:46:29 PDT 2022 <br />
+Song removed from your playlist: 'Paradise' by Coldplay
+
+Tue Aug 09 21:46:31 PDT 2022 <br />
+Song removed from your playlist: 'Riptide' by Vance Joy
+
+Tue Aug 09 21:46:43 PDT 2022 <br />
+Song added to your playlist: 'Best Part' by Daniel Caesar
+
+Tue Aug 09 21:46:45 PDT 2022 <br />
+Song removed from your playlist: 'Hello' by Adele

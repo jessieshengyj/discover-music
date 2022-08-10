@@ -31,6 +31,9 @@ public class Playlist implements Writable {
         } else {
             allSongs.addAllSongs();
             songList.add(allSongs.getSong(title));
+
+            EventLog.getInstance().logEvent(new Event("Song added to your playlist: "
+                    + "'" + title + "' by " + allSongs.getSong(title).getArtist()));
             return true;
         }
     }
@@ -48,6 +51,16 @@ public class Playlist implements Writable {
         } else {
             return false;
         }
+    }
+
+    // REQUIRES: index >= 0 AND index <= getSongList.size() - 1
+    // MODIFIES: this
+    // EFFECTS: removes the song at given index of song list
+    public void removeIndex(int index) {
+        Song song = songList.get(index);
+        String songAndArtist = "'" + song.getTitle() + "' by " + song.getArtist();
+        songList.remove(index);
+        EventLog.getInstance().logEvent(new Event("Song removed from your playlist: " + songAndArtist));
     }
 
     // REQUIRES: title has a non-zero length AND a song in full song bank has given title
