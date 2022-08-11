@@ -41,7 +41,7 @@ class JsonWriterTest extends JsonTest {
             assertEquals(0, p.getSongList().size());
             assertEquals(0, p.getTitleList().size());
         } catch (IOException e) {
-            fail("Exception should not have been thrown");
+            fail("Exception should not have been thrown!");
         }
     }
 
@@ -64,7 +64,7 @@ class JsonWriterTest extends JsonTest {
             checkSong("Love Story", "Taylor Swift", 2008, "pop", "2000-2009", songs.get(1));
 
         } catch (IOException e) {
-            fail("Exception should not have been thrown");
+            fail("Exception should not have been thrown!");
         }
     }
 }
