@@ -66,7 +66,7 @@ Song removed from your playlist: 'Hello' by Adele
 
 Future changes to improve the cohesion, coupling, readability and overall structure of my code:
 - Remove the myRecSong field in SongBank, since the recommendation list could be obtained by filtering 
-the original songDatabase list
+the original songDatabase list - this would remove one of the two associations between SongBank and Song
 - Increase robustness of my program by creating and handling exceptions (for invalid song genre, title, etc.), 
 rather than using if-else clauses in the MusicRecApp and MusicRecAppUI classes
 - Further refactor the UI class by extracting methods to capture behaviour
